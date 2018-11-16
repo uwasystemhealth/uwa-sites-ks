@@ -8,6 +8,7 @@ const { Types } = keystone.Field;
 
 const Classifier = new keystone.List('Classifier', {
 	autokey: { from: 'name', path: 'key', unique: true },
+	track: true,
 });
 
 Classifier.add({
