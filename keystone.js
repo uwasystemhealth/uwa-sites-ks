@@ -24,7 +24,7 @@ keystone.init({
 		layoutsDir: 'templates/views/layouts',
 		partialsDir: 'templates/views/partials',
 		defaultLayout: 'default',
-		helpers: new require('./templates/views/helpers')(),
+		helpers: new (require('./templates/views/helpers'))(),
 		extname: '.hbs',
 	}).engine,
 
@@ -34,6 +34,8 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
+	'signin redirect': '/',
+	'signin logo': '../images/logo.png',
 });
 
 // Load your project's Models
@@ -55,9 +57,11 @@ keystone.set('routes', require('./routes'));
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	posts: ['posts', 'post-categories'],
-	galleries: 'galleries',
-	enquiries: 'enquiries',
+	infrastructure: 'infra',
+	sensors: 'sensors',
+	classifiers: 'classifiers',
+	locations: 'locations',
+	faults: 'faults',
 	users: 'users',
 });
 

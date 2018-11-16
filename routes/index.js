@@ -35,10 +35,20 @@ var routes = {
 exports = module.exports = function (app) {
 	// Views
 	app.get('/', routes.views.index);
-	app.get('/blog/:category?', routes.views.blog);
-	app.get('/blog/post/:post', routes.views.post);
-	app.get('/gallery', routes.views.gallery);
-	app.all('/contact', routes.views.contact);
+	// app.get('/blog/:category?', routes.views.blog);
+	// app.get('/blog/post/:post', routes.views.post);
+	// app.get('/gallery', routes.views.gallery);
+	// app.all('/contact', routes.views.contact);
+	app.get('/infrastructure/:class', middleware.requireUser, routes.views.find);
+	app.get('/piece/:slug', middleware.requireUser, routes.views.get);
+	app.get('/sensors/:class', middleware.requireUser, routes.views.find);
+	app.get('/sensor/:slug', middleware.requireUser, routes.views.get);
+	app.get('/classifiers/', middleware.requireUser, routes.views.find);
+	app.get('/class/:slug', middleware.requireUser, routes.views.get);
+	app.get('/faults/:class', middleware.requireUser, routes.views.find);
+	app.get('/fault/:slug', middleware.requireUser, routes.views.get);
+	app.get('/locations/', middleware.requireUser, routes.views.find);
+	app.get('/location/:slug', middleware.requireUser, routes.views.get);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
