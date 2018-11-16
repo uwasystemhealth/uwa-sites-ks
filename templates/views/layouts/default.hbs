@@ -7,6 +7,9 @@
 		<title>UWA SHL Sites Index</title>
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.22/css/uikit.min.css" integrity="sha256-iyi99z0YCXphPJKgycNSwgYQwMV9qvCJLC8tlBHvBO0=" crossorigin="anonymous" />
+		{{#ifeq @exphbs.view 'find'}}
+			<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.uikit.min.css">
+		{{/if}}
 		<link href="/styles/site.css" rel="stylesheet">
 
 		{{!-- This file provides the default styling for the KeystoneJS Content Editor
@@ -86,45 +89,55 @@
 			</div>
 		</nav>
 		<div id="body">
-			<!--
-				Flash messages allow you to display once-off status messages to users, e.g. form
-				validation errors, success messages, etc
-			-->
-			{{#if messages}}
-			<div id="flash-messages" class="container">
-				{{#if messages.info}}
-				<div class="alert alert-info">
-						{{{flashMessages messages.info}}}
-				</div>
-				{{/if}}
-				{{#if messages.success}}
-				<div class="alert alert-success">
-						{{{flashMessages messages.success}}}
-				</div>
-				{{/if}}
-				{{#if messages.warning}}
-				<div class="alert alert-warning">
-						{{{flashMessages messages.warning}}}
-				</div>
-				{{/if}}
-				{{#if messages.error}}
-				<div class="alert alert-danger">
-						{{{flashMessages messages.error}}}
-				</div>
-				{{/if}}
-			</div>
-			{{/if}}
 			<!-- The content block should contain the body of your template's content-->
 			{{{body}}}
 		</div>
-		<div class="container">
-			<div id="footer">
-				<p>Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a>.</p>
-			</div>
-		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.22/js/uikit.min.js" integrity="sha256-cpRPZqhjd9qhuLI11hjlSy0W1o4xd1O5L12RYiA2rpU=" crossorigin="anonymous"></script>
+		{{#ifeq @exphbs.view 'find'}}
+			<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+			<script src="https://cdn.datatables.net/1.10.19/js/dataTables.uikit.min.js"></script>
+			<script>$(document).ready(function(){$('.uk-data-table').DataTable();});</script>
+		{{/if}}
 		<script src="js/site.js">
 		{{{isAdminEditorJS user}}}
+		{{#if messages}}
+		<!--
+			Flash messages allow you to display once-off status messages to users, e.g. form
+			validation errors, success messages, etc
+		-->
+		<script>
+			$(document).ready(function(){
+				{{#if messages.info}}
+					UIkit.notification({
+						message: '{{{flashMessages messages.info}}}',
+						status: 'primary',
+						timeout: 10000,
+					});
+				{{/if}}
+				{{#if messages.success}}
+					UIkit.notification({
+						message: '{{{flashMessages messages.success}}}',
+						status: 'success',
+						timeout: 10000,
+					});
+				{{/if}}
+				{{#if messages.warning}}
+					UIkit.notification({
+						message: '{{{flashMessages messages.warning}}}',
+						status: 'warning',
+						timeout: 10000,
+					});
+				{{/if}}
+				{{#if messages.error}}
+					UIkit.notification({
+						message: '{{{flashMessages messages.error}}}',
+						status: 'danger',
+						timeout: 10000,
+					});
+				{{/if}}
+			});
+		</script>
+		{{/if}}
 	</body>
 </html>

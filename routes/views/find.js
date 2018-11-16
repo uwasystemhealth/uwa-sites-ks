@@ -73,12 +73,8 @@ exports = module.exports = function (req, res) {
 	// Load the posts
 	view.on('init', function (next) {
 
-		var q = keystone.list(locals.list).paginate({
-			page: req.query.page || 1,
-			perPage: req.query.limit || 20,
-			maxPages: 100,
-			filters: {},
-		})
+		var q = keystone.list(locals.list)
+			.find()
 			.sort('name')
 			.populate(locals.populate);
 

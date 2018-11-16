@@ -13,6 +13,43 @@ module.exports = function () {
 
 	var _helpers = {};
 
+	_helpers.ifKeyExists = function (rows, key, options) {
+		if (rows.prototype[`iKE-${key}`] !== false && _.find(rows, row => _.has(row, key))) { // eslint-disable-line eqeqeq
+			rows.prototype[`iKE-${key}`] = true;
+			return options.fn(this);
+		} else {
+			// cache result to prevent repeatative processing
+			rows.prototype[`iKE-${key}`] = false;
+			return options.inverse(this);
+		}
+	};
+
+	// create embedded google maps popup
+	_helpers.locLink = function (loc, options) {
+		if (!loc) return '';
+		if (Array.isArray(loc)) loc = { name: `${loc[1]}, ${loc[0]}`, coords: loc };
+		return ```
+			<div uk-lightbox>
+				<a
+					href="https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&hl=es;z=14&amp;output=embed"
+					data-caption="Google Maps"
+					data-type="iframe"
+				>
+					${loc.name}
+				</a>
+			</div>
+		```;
+	};
+
+	// create embedded google maps popup
+	_helpers.getFirstX = function (arr, x, opts) {
+		if (!arr) return '';
+		if (!Array.isArray(arr)) arr = (arr + '').split(opts.del || ' | ');
+		let rtn = arr.splice(0, x);
+		if (opts.tail && arr.length) rtn.push(opts.tail);
+		return typeof opts.join === 'string' ? rtn.join(opts.join) : rtn;
+	};
+
 	/**
 	 * Generic HBS Helpers
 	 * ===================
@@ -143,9 +180,13 @@ module.exports = function () {
 	};
 
 	// Used to generate the link for the admin edit post button
-	_helpers.adminEditableUrl = function (user, options) {
+	_helpers.adminEditableUrl = function (user, list, options) {
+		if (!options) {
+			options = list;
+			list = 'Post';
+		}
 		var rtn = keystone.app.locals.editable(user, {
-			list: 'Post',
+			list,
 			id: options,
 		});
 		return rtn;
@@ -196,14 +237,8 @@ module.exports = function () {
 		return ('/blog/post/' + postSlug);
 	};
 
-	// might be a ghost helper
-	// used for pagination urls on blog
-	_helpers.pageUrl = function (pageNumber, options) {
-		return '/blog?page=' + pageNumber;
-	};
-
 	// create the category url for a blog-category page
-	_helpers.categoryUrl = function (categorySlug, options) {
+	_helpers.categoryUrl = function (section, categorySlug, options) {
 		return ('/blog/' + categorySlug);
 	};
 

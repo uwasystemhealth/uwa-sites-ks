@@ -1,0 +1,59 @@
+<div class="uk-section">
+    <div class="uk-container">
+        <h1>{{#ifeq list 'Infra'}}Infrastructure{{else}}{{list}}{{/ifeq}}</h1>
+        {{#if data.classes}}
+            <select class="uk-select filter-classes">
+                <option style="display:none">Filter Classifier</option>
+                {{#each data.classes}}
+                    <option value="{{this.slug}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <script>$(document).ready(function(){$('.filter-classes').change(function(){location.href='/{{section}}/'+$(this).val();})});</script>
+        {{/if}}
+        {{#if data.rows}}
+        <table class="uk-table uk-table-hover uk-table-striped uk-data-table" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    {{#ifKeyExists data.rows 'qty'}}<th>Quantity</th>{{/ifKeyExists}}
+                    {{#ifKeyExists data.rows 'classes'}}<th>Classifiers</th>{{/ifKeyExists}}
+                    {{#ifKeyExists data.rows 'location'}}<th>Location</th>{{/ifKeyExists}}
+                    {{#ifKeyExists data.rows 'examples'}}<th>Example Statement</th>{{/ifKeyExists}}
+                    {{#ifKeyExists data.rows 'coords'}}<th>Coordinates</th>{{/ifKeyExists}}
+                </tr>
+            </thead>
+            <tbody>
+            {{#each data.rows}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{desc}}</td>
+                        {{#ifKeyExists data.rows 'qty'}}<td>{{#if qty}}{{qty}}{{else}}0{{/if}}</td>{{/ifKeyExists}}
+                        {{#ifKeyExists data.rows 'classes'}}
+                            <td>{{getFirstX classes 3 tail="..." join=", " key="name"}}</td>
+                        {{/ifKeyExists}}
+                        {{#ifKeyExists data.rows 'location'}}<td>{{{locLink location}}}</td>{{/ifKeyExists}}
+                        {{#ifKeyExists data.rows 'examples'}}
+                            <td>{{getFirstX examples 1 join=""}}</td>
+                        {{/ifKeyExists}}
+                        {{#ifKeyExists data.rows 'coords'}}<td>{{{locLink coords}}}</td>{{/ifKeyExists}}
+                    </tr>
+            {{/each}}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    {{#ifKeyExists data.rows 'qty'}}<th>Quantity</th>{{/ifKeyExists}}
+                    {{#ifKeyExists data.rows 'classes'}}<th>Classifiers</th>{{/ifKeyExists}}
+                    {{#ifKeyExists data.rows 'location'}}<th>Location</th>{{/ifKeyExists}}
+                    {{#ifKeyExists data.rows 'examples'}}<th>Example Statement</th>{{/ifKeyExists}}
+                    {{#ifKeyExists data.rows 'coords'}}<th>Coordinates</th>{{/ifKeyExists}}
+                </tr>
+            </tfoot>
+        </table>
+        {{else}}
+            <h3>🤷 Could not find any {{#ifeq list 'Infra'}}Infrastructure(s?){{else}}{{list}}{{/ifeq}}.</h3>
+        {{/if}}
+    </div>
+</div>
