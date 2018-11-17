@@ -36,6 +36,7 @@ keystone.init({
 	'user model': 'User',
 	'signin redirect': '/',
 	'signin logo': '../images/logo.png',
+	'cloudinary secure': true,
 });
 
 // Load your project's Models

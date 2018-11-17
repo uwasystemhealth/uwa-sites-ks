@@ -26,17 +26,17 @@
             <tbody>
             {{#each data.rows}}
                     <tr>
-                        <td>{{name}}</td>
-                        <td>{{desc}}</td>
-                        {{#ifKeyExists data.rows 'qty'}}<td>{{#if qty}}{{qty}}{{else}}0{{/if}}</td>{{/ifKeyExists}}
-                        {{#ifKeyExists data.rows 'classes'}}
+                        <td><a href="/{{../sing}}/{{slug}}"{{name}}></a></td>
+                        <td>{{desc.html}}</td>
+                        {{#ifKeyExists ../data.rows 'qty'}}<td>{{#if qty}}{{qty}}{{else}}0{{/if}}</td>{{/ifKeyExists}}
+                        {{#ifKeyExists ../data.rows 'classes'}}
                             <td>{{getFirstX classes 3 tail="..." join=", " key="name"}}</td>
                         {{/ifKeyExists}}
-                        {{#ifKeyExists data.rows 'location'}}<td>{{{locLink location}}}</td>{{/ifKeyExists}}
-                        {{#ifKeyExists data.rows 'examples'}}
+                        {{#ifKeyExists ../data.rows 'location'}}<td>{{{locLink location}}}</td>{{/ifKeyExists}}
+                        {{#ifKeyExists ../data.rows 'examples'}}
                             <td>{{getFirstX examples 1 join=""}}</td>
                         {{/ifKeyExists}}
-                        {{#ifKeyExists data.rows 'coords'}}<td>{{{locLink coords}}}</td>{{/ifKeyExists}}
+                        {{#ifKeyExists ../data.rows 'coords'}}<td>{{{locLink coords}}}</td>{{/ifKeyExists}}
                     </tr>
             {{/each}}
             </tbody>

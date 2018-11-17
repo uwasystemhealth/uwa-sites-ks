@@ -1,0 +1,117 @@
+<div class="uk-section">
+    <div class="uk-container">
+        {{#with data.row}}
+        <h1>{{name}}</h1>
+
+        <dl class="uk-description-list">
+            <dt>Description</dt>
+            <dd>{{{desc.html}}}</dd>
+            {{#ifeq ../list 'Infra'}}
+            <dt>Details</dt>
+            <dd>
+                <div uk-grid>
+                    {{#if age}}<div>Age: {{date age format="MM YYYY"}} ({{date age timeago=true}})</div>{{/if}}
+                    {{#if qty}}<div>Quantity: {{qty}}</div>{{/if}}
+                    {{#if location}}<div>Location: {{locLink location}}</div>{{/if}}
+                </div>
+            </dd>
+            {{/ifeq}}
+            {{#if images}}
+            <dt>images</dt>
+            <dd>
+                <div class="uk-child-width-1-3@m" uk-grid uk-lightbox="animation: slide">
+                    <div>
+                        {{#each images}}
+                            <a class="uk-inline" href="{{cloudinaryUrl}}">
+                                <img src="{{cloudinaryUrl}}" alt="">
+                            </a>
+                        {{/each}}
+                    </div>
+                </div>
+            </dd>
+            {{/if}}
+            {{#if classes}}
+            <dt>Classerfiers</dt>
+            <dd>
+                {{#each classes}}
+                    <a class="uk-badge" href="/class/{{slug}}">{{name}}</a>
+                {{/each}}
+            </dd>
+            {{/if}}
+            {{#if faults}}
+            <dt>{{#ifeq ../list 'Infra'}}Known{{else}}Possible{{/ifeq}} Faults</dt>
+            <dd>
+                {{#each faults}}
+                    <a class="uk-badge" href="/fault/{{slug}}">{{name}}</a>
+                {{/each}}
+            </dd>
+            {{/if}}
+            {{#if examples}}
+            <dt>Example {{#ifeq ../list 'Infra'}}Problem{{else}}Solution{{/ifeq}} Statements</dt>
+            <dd>
+                <ul class="uk-list uk-list-divider">
+                    {{#split examples ' | '}}
+                        <li>{{this}}</li>
+                    {{/split}}
+                </ul>
+            </dd>
+            {{/if}}
+            {{#if contact}}
+            <dt>Contact</dt>
+            <dd>
+                <ul class="uk-list">
+                    <li>{{contact.name}}</li>
+                    <li>{{contact.email}}</li>
+                    {{#if contact.phone}}<li>{{contact.phone}}</li>{{/if}}
+                </ul>
+            </dd>
+            {{/if}}
+            {{#if sensors}}
+                <dt>Possible Sensors</dt>
+                <dd>
+                    <div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid="masonry: true">
+                        {{#each sensors}}
+                        <div class="uk-card uk-card-default uk-flex uk-flex-center uk-flex-middle">
+                            {{#if images}}
+                                <div class="uk-card-media-top">
+                                    <img src="{{cloudinaryUrl images[0]}}" alt="">
+                                </div>
+                            {{/if}}
+                            <div class="uk-card-title">
+                                <a href="/sensor/{{slug}}">{{name}}</a>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </dd>
+            {{/if}}
+            {{#if infra}}
+                <dt>{{#ifeq ../list 'Sensors'}}Possible{{else}}Related{{/ifeq}} Infrastructure</dt>
+                <dd>
+                    <div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid="masonry: true">
+                        {{#each infra}}
+                        <div class="uk-card uk-card-default uk-flex uk-flex-center uk-flex-middle">
+                            {{#if images}}
+                                <div class="uk-card-media-top">
+                                    <img src="{{cloudinaryUrl images[0]}}" alt="">
+                                </div>
+                            {{/if}}
+                            <div class="uk-card-title">
+                                <a href="/sensor/{{slug}}">{{name}}</a>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </dd>
+            {{/if}}
+            {{#if coords}}
+                <dt>Coordinates</dt>
+                <dd>{{locLink coords}}</dd>
+            {{/if}}
+        </dl>
+        {{#if ../user.canAccessKeystone}}
+            <a class="uk-button" href="{{adminEditableUrl ../user ../list}}">Edit</a>
+        {{/if}}
+        {{/with}}
+    </div>
+</div>

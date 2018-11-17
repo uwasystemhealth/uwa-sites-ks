@@ -15,6 +15,13 @@ exports = module.exports = function (req, res) {
 		faults: 'Faults',
 		locations: 'Locations',
 	})[locals.section];
+	locals.sing = ({
+		infrastructure: 'piece',
+		sensors: 'sensor',
+		classifiers: 'class',
+		faults: 'fault',
+		locations: 'location',
+	})[locals.section];
 	locals.populate = ({
 		infrastructure: 'classes contact location faults',
 		sensors: 'classes',

@@ -50,6 +50,17 @@ module.exports = function () {
 		return typeof opts.join === 'string' ? rtn.join(opts.join) : rtn;
 	};
 
+	// split string by delimiter
+	_helpers.split = function (str, del, options) {
+		if (str) { // eslint-disable-line eqeqeq
+			let arr = str;
+			if (!Array.isArray(str)) arr = (str + '').split(del);
+			return arr.map(options.fn).join(options.join || '');
+		} else {
+			return options.inverse(this);
+		}
+	};
+
 	/**
 	 * Generic HBS Helpers
 	 * ===================
