@@ -16,27 +16,27 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
-                    {{#ifKeyExists data.rows 'qty'}}<th>Quantity</th>{{/ifKeyExists}}
-                    {{#ifKeyExists data.rows 'classes'}}<th>Classifiers</th>{{/ifKeyExists}}
-                    {{#ifKeyExists data.rows 'location'}}<th>Location</th>{{/ifKeyExists}}
-                    {{#ifKeyExists data.rows 'examples'}}<th>Example Statement</th>{{/ifKeyExists}}
-                    {{#ifKeyExists data.rows 'coords'}}<th>Coordinates</th>{{/ifKeyExists}}
+                    {{#has data.keys 'qty'}}<th>Quantity</th>{{/has}}
+                    {{#has data.keys 'classes'}}<th>Classifiers</th>{{/has}}
+                    {{#has data.keys 'location'}}<th>Location</th>{{/has}}
+                    {{#has data.keys 'examples'}}<th>Example Statement</th>{{/has}}
+                    {{#has data.keys 'coords'}}<th>Coordinates</th>{{/has}}
                 </tr>
             </thead>
             <tbody>
             {{#each data.rows}}
                     <tr>
-                        <td><a href="/{{../sing}}/{{slug}}"{{name}}></a></td>
+                        <td><a href="/{{../sing}}/{{slug}}">{{name}}</a></td>
                         <td>{{desc.html}}</td>
-                        {{#ifKeyExists ../data.rows 'qty'}}<td>{{#if qty}}{{qty}}{{else}}0{{/if}}</td>{{/ifKeyExists}}
-                        {{#ifKeyExists ../data.rows 'classes'}}
+                        {{#has ../data.keys 'qty'}}<td>{{#if qty}}{{qty}}{{else}}0{{/if}}</td>{{/has}}
+                        {{#has ../data.keys 'classes'}}
                             <td>{{getFirstX classes 3 tail="..." join=", " key="name"}}</td>
-                        {{/ifKeyExists}}
-                        {{#ifKeyExists ../data.rows 'location'}}<td>{{{locLink location}}}</td>{{/ifKeyExists}}
-                        {{#ifKeyExists ../data.rows 'examples'}}
+                        {{/has}}
+                        {{#has ../data.keys 'location'}}<td>{{{locLink location}}}</td>{{/has}}
+                        {{#has ../data.keys 'examples'}}
                             <td>{{getFirstX examples 1 join=""}}</td>
-                        {{/ifKeyExists}}
-                        {{#ifKeyExists ../data.rows 'coords'}}<td>{{{locLink coords}}}</td>{{/ifKeyExists}}
+                        {{/has}}
+                        {{#has ../data.keys 'coords'}}<td>{{{locLink coords}}}</td>{{/has}}
                     </tr>
             {{/each}}
             </tbody>
@@ -44,11 +44,11 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
-                    {{#ifKeyExists data.rows 'qty'}}<th>Quantity</th>{{/ifKeyExists}}
-                    {{#ifKeyExists data.rows 'classes'}}<th>Classifiers</th>{{/ifKeyExists}}
-                    {{#ifKeyExists data.rows 'location'}}<th>Location</th>{{/ifKeyExists}}
-                    {{#ifKeyExists data.rows 'examples'}}<th>Example Statement</th>{{/ifKeyExists}}
-                    {{#ifKeyExists data.rows 'coords'}}<th>Coordinates</th>{{/ifKeyExists}}
+                    {{#has data.keys 'qty'}}<th>Quantity</th>{{/has}}
+                    {{#has data.keys 'classes'}}<th>Classifiers</th>{{/has}}
+                    {{#has data.keys 'location'}}<th>Location</th>{{/has}}
+                    {{#has data.keys 'examples'}}<th>Example Statement</th>{{/has}}
+                    {{#has data.keys 'coords'}}<th>Coordinates</th>{{/has}}
                 </tr>
             </tfoot>
         </table>

@@ -6,8 +6,8 @@ const { Types } = keystone.Field;
  * ==================
  */
 
-const Classifier = new keystone.List('Classifier', {
-	autokey: { from: 'name', path: 'key', unique: true },
+const Classifier = new keystone.List('Classifiers', {
+	autokey: { from: 'name', path: 'slug', unique: true },
 	track: true,
 });
 

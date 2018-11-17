@@ -6,10 +6,10 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>UWA SHL Sites Index</title>
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.22/css/uikit.min.css" integrity="sha256-iyi99z0YCXphPJKgycNSwgYQwMV9qvCJLC8tlBHvBO0=" crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.22/css/uikit.min.css" crossorigin="anonymous" />
 		{{#ifeq @exphbs.view 'find'}}
 			<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.uikit.min.css">
-		{{/if}}
+		{{/ifeq}}
 		<link href="/styles/site.css" rel="stylesheet">
 
 		{{!-- This file provides the default styling for the KeystoneJS Content Editor
@@ -25,7 +25,7 @@
 
 	</head>
 	<body>
-		<div id="nav-offcanvas-slide" uk-offcanvas>
+		<div id="nav-offcanvas-slide" uk-offcanvas class="uk-hidden@m">
 			<div class="uk-offcanvas-bar">
 				<ul class="uk-nav uk-nav-default">
 					{{# each navLinks}}
@@ -35,7 +35,7 @@
 					{{/each}}
 					<li class="uk-nav-divider"></li>
 					{{#if user}}
-						<li class="uk-nav-header">Header</li>
+						<li class="uk-nav-header">{{user.name.first}}</li>
 						{{#if user.canAccessKeystone}}
 							<li><a href="{{adminUrl}}/">Backend</a></li>
 						{{/if}}
@@ -46,20 +46,20 @@
 				</ul>
 			</div>
 		</div>
-		<nav class="uk-navbar uk-navbar-container uk-margin">
-			<div class="uk-navbar-left">
+		<nav class="uk-navbar uk-navbar-container">
+			<div class="uk-navbar-left uk-hidden@m">
 				<a class="uk-navbar-toggle" href="#nav-offcanvas-slide" uk-toggle>
 					<span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Menu</span>
 				</a>
 			</div>
-			<div class="uk-navbar-center">
+			<div class="uk-navbar-center uk-hidden@m">
 				<a class="uk-navbar-item uk-logo" href="/">Sites Index</a>
 			</div>
-			<div class="uk-navbar-left">
+			<div class="uk-navbar-left uk-visible@m">
 				<a class="uk-navbar-item uk-logo" href="/">Sites Index</a>
 
 				<ul class="uk-navbar-nav">
-					{{# each navLinks}}
+					{{#each navLinks}}
 						<li {{#ifeq ../section key}}class="uk-active"{{else}}{{/ifeq}}>
 							<a href="{{ href }}">{{ label }}</a>
 						</li>
@@ -67,12 +67,12 @@
 				</ul>
 
 			</div>
-			<div class="uk-navbar-right">
+			<div class="uk-navbar-right uk-visible@m">
 
 				<ul class="uk-navbar-nav">
 					{{#if user}}
 						<li>
-							<a href="#">{{user.name}}</a>
+							<a href="#">{{user.name.first}}</a>
 							<div class="uk-navbar-dropdown">
 								<ul class="uk-nav uk-navbar-dropdown-nav">
 									{{#if user.canAccessKeystone}}
@@ -93,12 +93,12 @@
 			{{{body}}}
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.22/js/uikit.min.js" integrity="sha256-cpRPZqhjd9qhuLI11hjlSy0W1o4xd1O5L12RYiA2rpU=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.22/js/uikit.min.js" crossorigin="anonymous"></script>
 		{{#ifeq @exphbs.view 'find'}}
 			<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 			<script src="https://cdn.datatables.net/1.10.19/js/dataTables.uikit.min.js"></script>
 			<script>$(document).ready(function(){$('.uk-data-table').DataTable();});</script>
-		{{/if}}
+		{{/ifeq}}
 		<script src="js/site.js">
 		{{{isAdminEditorJS user}}}
 		{{#if messages}}

@@ -13,32 +13,47 @@ module.exports = function () {
 
 	var _helpers = {};
 
-	_helpers.ifKeyExists = function (rows, key, options) {
-		if (rows.prototype[`iKE-${key}`] !== false && _.find(rows, row => _.has(row, key))) { // eslint-disable-line eqeqeq
-			rows.prototype[`iKE-${key}`] = true;
+	_helpers.has = function (arr, v, options) {
+		if (arr.indexOf(v) !== -1) {
 			return options.fn(this);
 		} else {
-			// cache result to prevent repeatative processing
-			rows.prototype[`iKE-${key}`] = false;
 			return options.inverse(this);
 		}
 	};
+
+	_helpers.toLower = function (v) { return v.toLowerCase(); };
 
 	// create embedded google maps popup
 	_helpers.locLink = function (loc, options) {
 		if (!loc) return '';
 		if (Array.isArray(loc)) loc = { name: `${loc[1]}, ${loc[0]}`, coords: loc };
-		return ```
+		return `
 			<div uk-lightbox>
 				<a
-					href="https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&hl=es;z=14&amp;output=embed"
-					data-caption="Google Maps"
+					href="https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&z=14&amp;output=embed"
+					data-caption="<a href='https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&z=14&amp'>${loc.name}</a>${loc.desc ? '<br>' + loc.desc.html : ''}"
 					data-type="iframe"
 				>
 					${loc.name}
 				</a>
 			</div>
-		```;
+		`;
+	};
+
+	// create embedded google maps iframe
+	_helpers.locIFrame = function (loc, options) {
+		if (!loc) return '';
+		if (Array.isArray(loc)) loc = { name: `${loc[1]}, ${loc[0]}`, coords: loc };
+		return `
+			<div>
+				<a href='https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&z=14&amp'>${loc.name}</a>
+				<iframe
+					src="https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&z=14&amp;output=embed"
+					style="width: 100%; height: 40vw; min-height: 400px;"
+				></iframe>
+				${loc.desc ? '<br>' + loc.desc.html : ''}
+			</div>
+		`;
 	};
 
 	// create embedded google maps popup
@@ -191,14 +206,14 @@ module.exports = function () {
 	};
 
 	// Used to generate the link for the admin edit post button
-	_helpers.adminEditableUrl = function (user, list, options) {
+	_helpers.adminEditableUrl = function (user, list, id, options) {
 		if (!options) {
 			options = list;
 			list = 'Post';
 		}
 		var rtn = keystone.app.locals.editable(user, {
 			list,
-			id: options,
+			id,
 		});
 		return rtn;
 	};

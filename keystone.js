@@ -32,6 +32,7 @@ keystone.init({
 
 	'auto update': true,
 	'session': true,
+	'session store': 'mongo',
 	'auth': true,
 	'user model': 'User',
 	'signin redirect': '/',
@@ -58,12 +59,12 @@ keystone.set('routes', require('./routes'));
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	infrastructure: 'infra',
-	sensors: 'sensors',
-	classifiers: 'classifiers',
-	locations: 'locations',
-	faults: 'faults',
-	users: 'users',
+	infrastructure: 'Infra',
+	sensors: 'Sensors',
+	classifiers: 'Classifiers',
+	locations: 'Locations',
+	faults: 'Faults',
+	users: 'User',
 });
 
 // Start Keystone to connect to your database and initialise the web server

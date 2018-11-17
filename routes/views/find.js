@@ -1,5 +1,6 @@
 var keystone = require('keystone');
 var async = require('async');
+var _ = require('lodash');
 
 exports = module.exports = function (req, res) {
 
@@ -7,7 +8,7 @@ exports = module.exports = function (req, res) {
 	var locals = res.locals;
 
 	// Init locals
-	locals.section = req.path.match(/^\/[a-z]\//).replace(/\//g, '');
+	locals.section = req.url.match(/^\/[a-z]+/)[0].replace(/\//g, '');
 	locals.list = ({
 		infrastructure: 'Infra',
 		sensors: 'Sensors',
@@ -34,6 +35,7 @@ exports = module.exports = function (req, res) {
 	};
 	locals.data = {
 		rows: [],
+		keys: [],
 		classes: [],
 	};
 
@@ -77,10 +79,10 @@ exports = module.exports = function (req, res) {
 		}
 	});
 
-	// Load the posts
+	// Load the rows
 	view.on('init', function (next) {
 
-		var q = keystone.list(locals.list)
+		var q = keystone.list(locals.list).model
 			.find()
 			.sort('name')
 			.populate(locals.populate);
@@ -91,6 +93,7 @@ exports = module.exports = function (req, res) {
 
 		q.exec(function (err, results) {
 			locals.data.rows = results;
+			locals.data.keys = results.reduce((a, r) => _.uniq([...a, ...Object.keys(r._doc)]), []);
 			next(err);
 		});
 	});

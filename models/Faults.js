@@ -7,7 +7,7 @@ const { Types } = keystone.Field;
  */
 
 const Faults = new keystone.List('Faults', {
-	autokey: { from: 'name', path: 'key', unique: true },
+	autokey: { from: 'name', path: 'slug', unique: true },
 	track: true,
 	drilldown: 'classes',
 });
