@@ -1,14 +1,25 @@
 <div class="uk-section">
     <div class="uk-container">
-        <h1>{{#ifeq list 'Infra'}}Infrastructure{{else}}{{list}}{{/ifeq}}</h1>
+        <h1>
+            {{#ifeq list 'Infra'}}Infrastructure{{else}}{{list}}{{/ifeq}}
+            {{#if user.canAccessKeystone}}
+                <a class="uk-button uk-button-default" href="{{adminUrl}}/{{#ifeq list 'Infra'}}infras{{else}}{{toLower list}}{{/ifeq}}">Edit</a>
+            {{/if}}
+        </h1>
         {{#if data.classes}}
-            <select class="uk-select filter-classes">
-                <option style="display:none">Filter Classifier</option>
+        <div class="uk-text-right">
+            Classifier: 
+            <select
+                class="uk-select filter-classes uk-width-auto uk-form-small"
+                style="min-width: 190px;"
+                onchange="location.href=this.value;"
+            >
+                <option value="/{{section}}/">All</option>
                 {{#each data.classes}}
-                    <option value="{{this.slug}}">{{this.name}}</option>
+                    <option value="/{{section}}/{{slug}}" {{#ifeq ../data.class.slug slug}}selected{{/ifeq}}>{{name}}</option>
                 {{/each}}
             </select>
-            <script>$(document).ready(function(){$('.filter-classes').change(function(){location.href='/{{section}}/'+$(this).val();})});</script>
+        </div>
         {{/if}}
         {{#if data.rows}}
         <table class="uk-table uk-table-hover uk-table-striped uk-data-table" style="width:100%">
@@ -26,11 +37,15 @@
             <tbody>
             {{#each data.rows}}
                     <tr>
-                        <td><a href="/{{../sing}}/{{slug}}">{{name}}</a></td>
-                        <td>{{{desc.html}}}</td>
+                        <td class="uk-text-capitalize"><a href="/{{../sing}}/{{slug}}">{{name}}</a></td>
+                        <td><div style="max-height: 5em; overflow-y: auto;">{{{desc.html}}}</div></td>
                         {{#has ../data.keys 'qty'}}<td>{{#if qty}}{{qty}}{{else}}0{{/if}}</td>{{/has}}
                         {{#has ../data.keys 'classes'}}
-                            <td>{{getFirstX classes 3 tail="..." join=", " key="name"}}</td>
+                            <td>
+                                {{#each classes}}
+                                    <a class="uk-label" href="/{{../../section}}/{{slug}}">{{name}}</a>
+                                {{/each}}
+                            </td>
                         {{/has}}
                         {{#has ../data.keys 'location'}}<td>{{{locLink location}}}</td>{{/has}}
                         {{#has ../data.keys 'examples'}}

@@ -22,7 +22,7 @@ Infra.add({
 	faults: { type: Types.Relationship, ref: 'Faults', many: true, label: 'Known Faults', initial: true },
 	images: { type: Types.CloudinaryImages },
 	contact: { type: Types.Relationship, ref: 'User', initial: true },
-	examples: { type: Types.TextArray, label: 'Example Problem Statements' },
+	examples: { type: Types.TextArray, label: 'Example Problem Statements', initial: true },
 });
 
 // Infra.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';

@@ -4,8 +4,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>UWA SHL Sites Index</title>
-		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<title>{{#if row}}{{toCapital row.name}} - {{/if}}{{#ifeq section 'home'}}{{else}}{{toCapital section}} - {{/ifeq}}UWA SHL Sites Index</title>
+		<link rel="icon" href="/images/logo-32x32.png" sizes="32x32">
+		<link rel="icon" href="/images/logo-192x192.png" sizes="192x192">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.22/css/uikit.min.css" crossorigin="anonymous" />
 		{{#ifeq @exphbs.view 'find'}}
 			<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.uikit.min.css">
@@ -46,17 +47,17 @@
 				</ul>
 			</div>
 		</div>
-		<nav class="uk-navbar uk-navbar-container">
+		<nav class="uk-navbar-container" uk-navbar>
 			<div class="uk-navbar-left uk-hidden@m">
 				<a class="uk-navbar-toggle" href="#nav-offcanvas-slide" uk-toggle>
 					<span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Menu</span>
 				</a>
 			</div>
 			<div class="uk-navbar-center uk-hidden@m">
-				<a class="uk-navbar-item uk-logo" href="/">Sites Index</a>
+				<a class="uk-navbar-item uk-logo" href="/">{{>brand}}</a>
 			</div>
 			<div class="uk-navbar-left uk-visible@m">
-				<a class="uk-navbar-item uk-logo" href="/">Sites Index</a>
+				<a class="uk-navbar-item uk-logo" href="/">{{>brand}}</a>
 
 				<ul class="uk-navbar-nav">
 					{{#each navLinks}}
@@ -99,7 +100,7 @@
 			<script src="https://cdn.datatables.net/1.10.19/js/dataTables.uikit.min.js"></script>
 			<script>$(document).ready(function(){$('.uk-data-table').DataTable();});</script>
 		{{/ifeq}}
-		<script src="js/site.js">
+		<script src="/js/site.js">
 		{{{isAdminEditorJS user}}}
 		{{#if messages}}
 		<!--

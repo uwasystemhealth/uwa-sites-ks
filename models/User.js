@@ -13,7 +13,7 @@ User.add({
 	password: { type: Types.Password, initial: true, required: true },
 	phone: { type: Types.Text, initial: true },
 }, 'Permissions', {
-	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true },
+	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true, initial: true },
 });
 
 // Provide access to Keystone

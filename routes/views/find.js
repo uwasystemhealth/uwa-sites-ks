@@ -70,7 +70,7 @@ exports = module.exports = function (req, res) {
 	view.on('init', function (next) {
 
 		if (req.params.class) {
-			keystone.list('Classifiers').model.findOne({ key: locals.filters.class }).exec(function (err, result) {
+			keystone.list('Classifiers').model.findOne({ slug: locals.filters.class }).exec(function (err, result) {
 				locals.data.class = result;
 				next(err);
 			});

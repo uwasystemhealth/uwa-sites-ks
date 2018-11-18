@@ -15,7 +15,7 @@ const Faults = new keystone.List('Faults', {
 Faults.add({
 	name: { type: String, required: true, initial: true },
 	desc: { type: Types.Markdown, initial: true },
-	classes: { type: Types.Relationship, ref: 'Classifiers', many: true },
+	classes: { type: Types.Relationship, ref: 'Classifiers', many: true, initial: true },
 });
 
 Faults.relationship({ ref: 'Infra', path: 'infra', refPath: 'classes' });

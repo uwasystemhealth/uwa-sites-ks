@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+var _ = require('lodash');
 
 exports = module.exports = function (req, res) {
 
@@ -29,6 +30,17 @@ exports = module.exports = function (req, res) {
 		row: {},
 	};
 
+	var loadRelated = (list, on, ids, key, next) => {
+		keystone.list(list).model.find()
+		.where(on)
+		.in(ids)
+		.sort('name')
+		.exec(function (err, results) {
+			_.set(locals.data.row, key, results);
+			next(err);
+		});
+	};
+
 	// Load the current post
 	view.on('init', function (next) {
 
@@ -39,34 +51,27 @@ exports = module.exports = function (req, res) {
 		q.exec(function (err, result) {
 			locals.data.row = result;
 
-            // Load other related lists
-			if (locals.section === 'infrastructure') {
-				view.on('init', function (next) {
-					var q = keystone.list('Sensors').model.find()
-                        .where('classes')
-                        .in(result.classes)
-                        .sort('name')
-                        .populate('classes');
-					q.exec(function (err, results) {
-						locals.data.row.sensors = results;
-						next(err);
+			// Load other related lists
+			switch (locals.section) {
+				case 'piece':
+					loadRelated('Sensors', 'classes', result.classes.map(c => c._id), 'sensors', next);
+					break;
+				case 'sensor':
+					loadRelated('Infra', 'classes', result.classes.map(c => c._id), 'infra', next);
+					break;
+				case 'fault':
+					loadRelated('Infra', 'faults', [result._id], 'infra', next);
+					break;
+				case 'class':
+					loadRelated('Infra', 'classes', [result._id], 'infra', function (err) {
+						if (err) next(err);
+						else loadRelated('Sensors', 'classes', [result._id], 'sensors', next);
 					});
-				});
+					break;
+				default:
+					next();
+					break;
 			}
-			if (locals.section === 'sensors') {
-				view.on('init', function (next) {
-					var q = keystone.list('Infra').model.find()
-                        .where('classes')
-                        .in(result.classes)
-                        .sort('name')
-                        .populate('classes contact location faults');
-					q.exec(function (err, results) {
-						locals.data.row.infra = results;
-						next(err);
-					});
-				});
-			}
-			next(err);
 		});
 	});
 

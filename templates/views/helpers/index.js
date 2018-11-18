@@ -22,6 +22,7 @@ module.exports = function () {
 	};
 
 	_helpers.toLower = function (v) { return v.toLowerCase(); };
+	_helpers.toCapital = function (v) { return v.replace(/\b\w/g, l => l.toUpperCase()); };
 
 	// create embedded google maps popup
 	_helpers.locLink = function (loc, options) {
@@ -46,12 +47,10 @@ module.exports = function () {
 		if (Array.isArray(loc)) loc = { name: `${loc[1]}, ${loc[0]}`, coords: loc };
 		return `
 			<div>
-				<a href='https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&z=14&amp'>${loc.name}</a>
 				<iframe
 					src="https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&z=14&amp;output=embed"
 					style="width: 100%; height: 40vw; min-height: 400px;"
 				></iframe>
-				${loc.desc ? '<br>' + loc.desc.html : ''}
 			</div>
 		`;
 	};
@@ -61,6 +60,7 @@ module.exports = function () {
 		if (!arr) return '';
 		if (!Array.isArray(arr)) arr = (arr + '').split(opts.del || ' | ');
 		let rtn = arr.splice(0, x);
+		if (opts.key) rtn = rtn.map(r => _.get(r, opts.key));
 		if (opts.tail && arr.length) rtn.push(opts.tail);
 		return typeof opts.join === 'string' ? rtn.join(opts.join) : rtn;
 	};

@@ -1,0 +1,16 @@
+{{#with row}}
+<a href="/{{../sing}}/{{slug}}" class="uk-link">
+    <div class="uk-card uk-card-default uk-card-hover uk-text-center">
+        {{#if images}}
+            <div class="uk-card-media-top">
+                {{#each images}}{{#if @first}}<img src="{{cloudinaryUrl}}" alt="">{{/if}}{{/each}}
+            </div>
+        <div class="uk-card-body" style="padding: 5px;">
+        {{else}}
+        <div class="uk-card-body"  style="padding: 20px 5px;">
+        {{/if}}
+            <h3 class="uk-card-title">{{name}}</h3>
+        </div>
+    </div>
+</a>
+{{/with}}
