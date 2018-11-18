@@ -27,7 +27,7 @@
             {{#each data.rows}}
                     <tr>
                         <td><a href="/{{../sing}}/{{slug}}">{{name}}</a></td>
-                        <td>{{desc.html}}</td>
+                        <td>{{{desc.html}}}</td>
                         {{#has ../data.keys 'qty'}}<td>{{#if qty}}{{qty}}{{else}}0{{/if}}</td>{{/has}}
                         {{#has ../data.keys 'classes'}}
                             <td>{{getFirstX classes 3 tail="..." join=", " key="name"}}</td>

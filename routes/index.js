@@ -39,14 +39,21 @@ exports = module.exports = function (app) {
 	// app.get('/blog/post/:post', routes.views.post);
 	// app.get('/gallery', routes.views.gallery);
 	// app.all('/contact', routes.views.contact);
+	app.get('/infrastructure/', middleware.requireUser, routes.views.find);
 	app.get('/infrastructure/:class', middleware.requireUser, routes.views.find);
 	app.get('/piece/:slug', middleware.requireUser, routes.views.get);
+
+	app.get('/sensors/', middleware.requireUser, routes.views.find);
 	app.get('/sensors/:class', middleware.requireUser, routes.views.find);
 	app.get('/sensor/:slug', middleware.requireUser, routes.views.get);
+
 	app.get('/classifiers/', middleware.requireUser, routes.views.find);
 	app.get('/class/:slug', middleware.requireUser, routes.views.get);
+
+	app.get('/faults/', middleware.requireUser, routes.views.find);
 	app.get('/faults/:class', middleware.requireUser, routes.views.find);
 	app.get('/fault/:slug', middleware.requireUser, routes.views.get);
+
 	app.get('/locations/', middleware.requireUser, routes.views.find);
 	app.get('/location/:slug', middleware.requireUser, routes.views.get);
 
