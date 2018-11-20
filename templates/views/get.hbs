@@ -6,9 +6,7 @@
     {{/if}}
     
     {{#if data.row.coords}}
-        <div class="uk-container">
-            {{{locIFrame data.row.coords}}}
-        </div>
+        {{{locIFrame data.row.coords}}}
     {{/if}}
 </div>
 <div class="uk-section">
@@ -26,13 +24,17 @@
                         <div uk-grid>
                             {{#if age}}<div>Age: <br>{{date age format="MM YYYY"}} ({{date age timeago=true}})</div>{{/if}}
                             {{#if qty}}<div>Quantity: <br>{{qty}}</div>{{/if}}
-                            {{#if location}}<div>Location: <br>{{{locLink location}}}</div>{{/if}}
+                            {{#if location}}<div>Location: <br>{{>locLightbox location}}</div>{{/if}}
                         </div>
                     </dd>
                     {{/ifeq}}
                     {{#if desc.html}}
                     <dt>Description</dt>
                     <dd>{{{desc.html}}}</dd>
+                    {{/if}}
+                    {{#if coords}}
+                        <dt>Coordinates</dt>
+                        <dd>{{>locLightbox coords}}</dd>
                     {{/if}}
                     {{#if classes}}
                     <dt>Classifiers</dt>
@@ -73,7 +75,7 @@
                     {{#if sensors}}
                         <dt>{{#ifeq ../list 'Infra'}}Possible{{else}}Related{{/ifeq}} Sensors</dt>
                         <dd>
-                            <div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid="masonry: true">
+                            <div class="uk-child-width-1-1" uk-grid="masonry: true">
                                 {{#each sensors}}
                                     {{>rowCard row=this sing="sensor"}}
                                 {{/each}}
@@ -83,16 +85,12 @@
                     {{#if infra}}
                         <dt>{{#ifeq ../list 'Sensors'}}Possible{{else}}Related{{/ifeq}} Infrastructure</dt>
                         <dd>
-                            <div class="uk-child-width-1-2@s uk-child-width-1-3@m uk-flex uk-flex-left" uk-grid="masonry: true">
+                            <div class="uk-child-width-1-1 uk-flex uk-flex-left" uk-grid="masonry: true">
                                 {{#each infra}}
                                     {{>rowCard row=this sing="piece"}}
                                 {{/each}}
                             </div>
                         </dd>
-                    {{/if}}
-                    {{#if coords}}
-                        <dt>Coordinates</dt>
-                        <dd>{{{locLink coords}}}</dd>
                     {{/if}}
                 </dl>
             </div>

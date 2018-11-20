@@ -47,11 +47,16 @@
                                 {{/each}}
                             </td>
                         {{/has}}
-                        {{#has ../data.keys 'location'}}<td>{{{locLink location}}}</td>{{/has}}
+                        {{#has ../data.keys 'location'}}
+                            <td>
+                                <a href="/location/{{location.slug}}">{{location.name}}</a>
+                                <br>({{>locLightbox name="Map" coords=location.coords desc=location.desc}})
+                            </td>
+                        {{/has}}
                         {{#has ../data.keys 'examples'}}
                             <td>{{getFirstX examples 1 join=""}}</td>
                         {{/has}}
-                        {{#has ../data.keys 'coords'}}<td>{{{locLink coords}}}</td>{{/has}}
+                        {{#has ../data.keys 'coords'}}<td>{{>locLightbox coords}}</td>{{/has}}
                     </tr>
             {{/each}}
             </tbody>

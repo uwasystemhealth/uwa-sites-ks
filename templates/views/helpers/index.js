@@ -23,23 +23,7 @@ module.exports = function () {
 
 	_helpers.toLower = function (v) { return v.toLowerCase(); };
 	_helpers.toCapital = function (v) { return v.replace(/\b\w/g, l => l.toUpperCase()); };
-
-	// create embedded google maps popup
-	_helpers.locLink = function (loc, options) {
-		if (!loc) return '';
-		if (Array.isArray(loc)) loc = { name: `${loc[1]}, ${loc[0]}`, coords: loc };
-		return `
-			<div uk-lightbox>
-				<a
-					href="https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&z=14&amp;output=embed"
-					data-caption="<a href='https://maps.google.com/maps?q=${loc.coords[1]},${loc.coords[0]}&z=14&amp'>${loc.name}</a>${loc.desc ? '<br>' + loc.desc.html : ''}"
-					data-type="iframe"
-				>
-					${loc.name}
-				</a>
-			</div>
-		`;
-	};
+	_helpers.get = function (v, i) { return v[i]; };
 
 	// create embedded google maps iframe
 	_helpers.locIFrame = function (loc, options) {
