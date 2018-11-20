@@ -62,6 +62,9 @@ exports = module.exports = function (req, res) {
 				case 'fault':
 					loadRelated('Infra', 'faults', [result._id], 'infra', next);
 					break;
+				case 'location':
+					loadRelated('Infra', 'location', [result._id], 'infra', next);
+					break;
 				case 'class':
 					loadRelated('Infra', 'classes', [result._id], 'infra', function (err) {
 						if (err) next(err);
