@@ -4,15 +4,15 @@
   "private": true,
   "dependencies": {
     "async": "2.1.4",
-    "cloudinary": "1.7.0",
+    "cloudinary": "^1.13.2",
     "connect-mongo": "^2.0.1",
     "dotenv": "4.0.0",
     "express-handlebars": "3.0.0",
     "handlebars": "4.0.6",
-    "keystone": "4.0.0-beta.5",
-    "keystone-email": "1.0.5",
+    "keystone": "^4.0.0",
+    "keystone-email": "^1.1.0",
     "lodash": "^4.13.1",
-    "moment": "2.17.1",
+    "moment": "^2.22.2",
     "stylus": "0.54.5"
   },
   "devDependencies": {
